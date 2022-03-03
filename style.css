@@ -1,64 +1,240 @@
 @import url('https://fonts.googleapis.com/css2?family=Spartan:wght@500;700&display=swap');
 
 :root {
-    /* Primary */
-    --primary: hsl(180, 29%, 50%)
+  /* Primary */
+  --primary: hsl(180, 29%, 50%);
 
-    /* Neutrals */
+  /* Neutrals */
 
-    --lightCyanBackground: hsl(180, 52%, 96%)
-    --lightCyanFilterTablets: hsl(180, 31%, 95%)
-    --darkCyan: hsl(180, 8%, 52%)
-    --veryDarkCyan: hsl(180, 14%, 20%)   
-    
-    /* Fonts */
-    --headingFont: 'Spartan', sans-serif;
+  --lightCyanBackground: hsl(180, 52%, 96%);
+  --lightCyanFilterTablets: hsl(180, 31%, 95%);
+  --darkCyan: hsl(180, 8%, 52%);
+  --veryDarkCyan: hsl(180, 14%, 20%);
 
-    /* Font Sizes */
+  /* Fonts */
+  --headingFont: 'Spartan', sans-serif;
 
-    --bodySize: 15px;
+  /* Font Sizes */
+
+  --bodySize: 15px;
 }
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-margin: 0;
-box-sizing: border-box;
-padding: 0;
-border: 0;
-font-size: 100%;
-font: inherit;
-vertical-align: baseline;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-    display: block;
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
 }
 body {
-    line-height: 1;
+  line-height: 1;
 }
-ol, ul {
-    list-style: none;
+ol,
+ul {
+  list-style: none;
 }
-blockquote, q {
-    quotes: none;
+blockquote,
+q {
+  quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
-    content: '';
-    content: none;
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
 }
 table {
-    border-collapse: collapse;
-    border-spacing: 0;}
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 100vh;
+  font-size: var(--bodySize);
+}
+
+/* HEADER START */
+
+header {
+  min-height: 25%;
+  background-color: var(--primary);
+  background-image: url('./images/bg-header-mobile.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* HEADER DONE  */
+
+/* JOB CONTAINER */
+
+#jobListings {
+  padding: 10% 5% 0 5%;
+  background-color: var(--lightCyanBackground);
+}
+
+#jobsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+#jobContainer {
+  padding: 0 0 5% 5%;
+  background-color: white;
+  box-shadow: 10px 10px 5px 0px rgba(44, 58, 58, 0.49);
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(44, 58, 58, 0.49);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(44, 58, 58, 0.49);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(30px, auto);
+  grid-template-areas:
+    'jobLogo jobLogo jobLogo'
+    'jobCompany jobNew jobNew'
+    'jobTitle jobTitle jobTitle'
+    'jobPosted jobTime jobLocation'
+    'jobSkills jobSkills jobSkills';
+}
+
+#jobLogo {
+  grid-area: jobLogo;
+  margin-top: -25px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: whitesmoke;
+  background-image: url('https://remotive.io/job/1141857/logo');
+  max-width: 20%;
+  min-height: 25px;
+  border-radius: 75%;
+}
+#jobCompany {
+  grid-area: jobCompany;
+  font-family: var(--headingFont);
+  color: var(--primary);
+  font-weight: 700;
+  align-self: center;
+}
+#jobNew {
+  grid-area: jobNew;
+  font-family: var(--headingFont);
+  color: white;
+  background-color: var(--primary);
+  max-width: fit-content;
+  padding: 5px;
+  align-self: center;
+  border-radius: 15px;
+  margin-left: 5%;
+}
+#jobTitle {
+  grid-area: jobTitle;
+}
+#jobPosted {
+  grid-area: jobPosted;
+}
+#jobTime {
+  grid-area: jobTime;
+}
+#jobLocation {
+  grid-area: jobLocation;
+}
+#jobSkills {
+  grid-area: jobSkills;
+}
