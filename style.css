@@ -176,6 +176,7 @@ header {
 #jobsContainer {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
 }
 
 #jobContainer {
@@ -280,14 +281,19 @@ header {
 
 @media screen and (min-width: 650px) {
   #jobContainer {
-    padding: 2%;
-    grid-template-columns: repeat(6, 1fr);
-    grid-auto-rows: minmax(30px, auto);
+    padding: 1.5%;
+    grid-template-columns: 75px 250px 1fr;
+    grid-auto-rows: minmax(20px, auto);
     grid-template-areas:
-      'jobLogo companyAndTag companyAndTag jobSkills jobSkills jobSkills'
-      'jobLogo jobTitle jobTitle jobSkills jobSkills jobSkills'
-      'jobLogo jobPostedTimeLocation jobPostedTimeLocation jobSkills jobSkills jobSkills';
+      'jobLogo companyAndTag jobSkills'
+      'jobLogo jobTitle jobSkills'
+      'jobLogo jobPostedTimeLocation jobSkills';
   }
+
+  #jobListings {
+    padding: 2% 5%;
+  }
+
   #jobLogo {
     margin: 0;
     align-self: center;
@@ -295,16 +301,30 @@ header {
     width: 75px;
   }
 
+  #jobTitle {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  #companyAndTag,
+  #jobPostedTimeLocation {
+    margin-bottom: 0.5em;
+  }
+
   #jobPostedTimeLocation {
     border: none;
     margin-bottom: none;
     justify-content: flex-start;
     align-items: center;
+    height: fit-content;
+    min-width: max-content;
   }
   #jobSkills {
     align-items: center;
-    justify-content: flex-start;
+    align-self: center;
+    justify-content: flex-end;
     padding-left: 0;
+    height: fit-content;
   }
   .jobSkill {
     font-size: 0.8em;
@@ -312,9 +332,12 @@ header {
   #jobPosted::after,
   #jobTime::after {
     content: '•';
-    padding: 0 5px 0 5px;
+    padding: 0px 5px;
     font-size: 1.5em;
   }
-  #jobLocation {
+  #jobLocation::after {
+    content: ' ';
+    padding: 0px 5px;
+    font-size: 1.5em;
   }
 }
