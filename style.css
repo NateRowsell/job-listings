@@ -182,6 +182,7 @@ header {
 #jobContainer {
   border-left: solid 5px var(--primary);
   padding: 0 5% 5% 5%;
+  margin-bottom: 50px;
   background-color: white;
   box-shadow: 10px 10px 5px 0px rgba(44, 58, 58, 0.49);
   -webkit-box-shadow: 10px 10px 5px 0px rgba(44, 58, 58, 0.49);
@@ -282,6 +283,7 @@ header {
 @media screen and (min-width: 650px) {
   #jobContainer {
     padding: 1.5%;
+    margin-bottom: 40px;
     grid-template-columns: 75px 250px 1fr;
     grid-auto-rows: minmax(20px, auto);
     grid-template-areas:
