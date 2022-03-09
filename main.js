@@ -1,4 +1,7 @@
 let allJobs = []
+let filteredByTagsArray = new Array()
+const filterContainer = document.getElementById('filterContainer')
+filterContainer.innerText = 'Filter jobs by clicking on job tag'
 const today = new Date()
 const jobTags = [
   'it',
@@ -33,7 +36,9 @@ async function getJobList() {
 }
 
 getJobList().then((data) =>
-  getAllJobs(data['jobs']).then((allJobs) => createJobDivs(allJobs)),
+  getAllJobs(data['jobs'])
+    .then((allJobs) => createJobDivs(allJobs))
+    .then(() => createFilterButtons()),
 )
 
 async function getAllJobs(array) {
@@ -164,5 +169,45 @@ function createJobDivs(allJobs) {
     }
 
     addJobSkills(jobSkillsToFilter, jobSkillsContainer)
+  }
+}
+
+function createFilterButtons() {
+  let jobSkillButtons = document.querySelectorAll('.jobSkill')
+  for (let j = 0; j < jobSkillButtons.length; j++) {
+    jobSkillButtons[j].addEventListener('click', () => {
+      if (filterContainer.innerText == 'Filter jobs by clicking on job tag') {
+        filterContainer.innerText = ''
+      }
+
+      if (filterContainer.innerText == '') {
+        let filteredByTags = filterContainer.innerText.split(/\r?\n/)
+        let filterRemoveButton = document.createElement('button')
+        filterRemoveButton.classList.add('filterRemoveButton')
+        let filterTag = document.createElement('div')
+        filterTag.classList.add('filterTag')
+        filterTag.innerText = jobSkillButtons[j].innerText
+        filterContainer.appendChild(filterTag)
+        filterTag.appendChild(filterRemoveButton)
+        filteredByTagsArray.push(filteredByTags)
+      } else {
+        let filteredByTags = filterContainer.innerText.split(/\r?\n/)
+        for (let i = 0; i < filteredByTagsArray.length; i++) {
+          console.log(filteredByTagsArray[i])
+          console.log(jobSkillButtons[j].innerText)
+          if (filteredByTagsArray[i] == jobSkillButtons[j].innerText) {
+            return // get to return to j loop
+          }
+        }
+        let filterRemoveButton = document.createElement('button')
+        filterRemoveButton.classList.add('filterRemoveButton')
+        let filterTag = document.createElement('div')
+        filterTag.classList.add('filterTag')
+        filterTag.innerText = jobSkillButtons[j].innerText
+        filterContainer.appendChild(filterTag)
+        filterTag.appendChild(filterRemoveButton)
+        filteredByTagsArray.push(filteredByTags)
+      }
+    })
   }
 }
