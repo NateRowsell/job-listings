@@ -166,26 +166,6 @@ header {
 
 /* HEADER DONE  */
 
-/* FILTER  */
-
-#filterContainer {
-  background-color: white;
-  min-width: 90%;
-  min-height: 100px;
-  margin-bottom: 50px;
-  margin-top: -90px;
-  box-shadow: 10px 10px 5px 0px rgba(44, 58, 58, 0.49);
-  -webkit-box-shadow: 10px 10px 5px 0px rgba(44, 58, 58, 0.49);
-  -moz-box-shadow: 10px 10px 5px 0px rgba(44, 58, 58, 0.49);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5em;
-  color: rgba(128, 128, 128, 0.5);
-}
-
-/* FILTER DONE  */
-
 /* JOB CONTAINER */
 
 #jobListings {
@@ -302,6 +282,59 @@ header {
   max-height: fit-content;
   font-weight: 700;
 }
+
+/* FILTER  */
+
+#filterContainer {
+  background-color: white;
+  min-width: 90%;
+  min-height: 100px;
+  margin-bottom: 50px;
+  margin-top: -90px;
+  box-shadow: 10px 10px 5px 0px rgba(44, 58, 58, 0.49);
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(44, 58, 58, 0.49);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(44, 58, 58, 0.49);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  color: rgba(128, 128, 128, 0.5);
+}
+
+.filterTag {
+  background-color: var(--lightCyanFilterTablets);
+  font-size: 0.8em;
+  min-height: max-content;
+  min-width: max-content;
+  margin-left: 20px;
+}
+
+.filterRemoveButton {
+  background-color: var(--darkCyan);
+  height: 0.8em;
+  width: 0.8em;
+  border: none;
+}
+
+#clearFiltersContainer {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: -60px;
+}
+
+#clearFilters {
+  font-size: 1em;
+  background-color: var(--lightCyanFilterTablets);
+  color: var(--veryDarkCyan);
+  border: none;
+}
+
+/* FILTER DONE */
 
 @media screen and (min-width: 650px) {
   header {
