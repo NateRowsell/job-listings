@@ -43,7 +43,7 @@ getJobList().then((data) =>
 )
 
 async function getAllJobs(array) {
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 1000; i++) {
     allJobs.push(array[i])
   }
   return allJobs
@@ -93,81 +93,144 @@ function postedDaysAgo(jobPostedTime) {
   }
 }
 
+function setJobTypeText(jobType) {
+  switch (true) {
+    // full_time / contract / internship / freelance
+    // other / part_time / <empty string>
+    case jobType == 'full_time':
+      return 'Full Time'
+    case jobType == 'part_time':
+      return 'Part Time'
+    case jobType == 'contract':
+      return 'Contract'
+    case jobType == 'internship':
+      return 'Internship'
+    case jobType == 'freelance':
+      return 'Freelance'
+    default:
+      return 'Other'
+  }
+}
+
+function clearJobs() {
+  while (jobsContainer.firstChild) {
+    jobsContainer.removeChild(jobsContainer.lastChild)
+  }
+}
+
 function createJobDivs(allJobs) {
-  for (let i = 0; i < allJobs.length; i++) {
-    //below must go in for loop array length
+  const jobsContainer = document.getElementById('jobsContainer')
+  let filteredJobs = []
 
-    const jobsContainer = document.getElementById('jobsContainer')
-    let jobContainer = createDiv('jobContainer')
-    let jobLogo = createDiv('jobLogo')
-    let companyAndTag = createDiv('companyAndTag')
-    let jobCompany = createDiv('jobCompany')
-    let jobNew = createDiv('jobNew')
-    let jobTitle = createDiv('jobTitle')
-    let jobPostedTimeLocation = createDiv('jobPostedTimeLocation')
-    let jobPosted = createDiv('jobPosted')
-    let jobPostedTime = allJobs[i].publication_date
-    let jobTime = createDiv('jobTime')
-    let jobLocation = createDiv('jobLocation')
-    let jobSkillsContainer = createDiv('jobSkills')
-    let jobType = allJobs[i].job_type
-    let jobTypeText
-    let jobSkillsToFilter = allJobs[i].tags
+  if (jobsContainer.childNodes.length == 0) {
+    for (let i = 0; i < allJobs.length; i++) {
+      //below must go in for loop array length
+      let jobContainer = createDiv('jobContainer')
+      let jobLogo = createDiv('jobLogo')
+      let companyAndTag = createDiv('companyAndTag')
+      let jobCompany = createDiv('jobCompany')
+      let jobNew = createDiv('jobNew')
+      let jobTitle = createDiv('jobTitle')
+      let jobPostedTimeLocation = createDiv('jobPostedTimeLocation')
+      let jobPosted = createDiv('jobPosted')
+      let jobPostedTime = allJobs[i].publication_date
+      let jobTime = createDiv('jobTime')
+      let jobLocation = createDiv('jobLocation')
+      let jobSkillsContainer = createDiv('jobSkills')
+      let jobType = allJobs[i].job_type
+      let jobTypeText = setJobTypeText(jobType)
+      let jobSkillsToFilter = allJobs[i].tags
 
-    switch (true) {
-      // full_time / contract / internship / freelance
-      // other / part_time / <empty string>
-      case jobType == 'full_time':
-        jobTypeText = 'Full Time'
-        break
-      case jobType == 'part_time':
-        jobTypeText = 'Part Time'
-        break
-      case jobType == 'contract':
-        jobTypeText = 'Contract'
-        break
-      case jobType == 'internship':
-        jobTypeText = 'Internship'
-        break
-      case jobType == 'freelance':
-        jobTypeText = 'Freelance'
-        break
-      default:
-        jobTypeText = 'Other'
+      jobTime.innerText = jobTypeText
+      jobCompany.innerText = allJobs[i].company_name
+      jobTitle.innerText = allJobs[i].title
+      jobPosted.innerText = postedDaysAgo(jobPostedTime)
+      jobLocation.innerText = allJobs[i].candidate_required_location
+      jobsContainer.appendChild(jobContainer)
+      jobContainer.appendChild(jobLogo)
+      jobContainer.appendChild(companyAndTag)
+      companyAndTag.appendChild(jobCompany)
+      jobContainer.appendChild(jobTitle)
+      jobContainer.appendChild(jobPostedTimeLocation)
+      jobPostedTimeLocation.append(jobPosted, jobTime, jobLocation)
+      jobContainer.append(jobSkillsContainer)
+
+      if (postedDaysAgo(jobPostedTime) == 'Today') {
+        jobNew.innerText = 'NEW!'
+        companyAndTag.appendChild(jobNew)
+      }
+      addJobSkills(jobSkillsToFilter, jobSkillsContainer)
     }
-
-    jobTime.innerText = jobTypeText
-
-    jobCompany.innerText = allJobs[i].company_name
-
-    jobTitle.innerText = allJobs[i].title
-
-    jobPosted.innerText = postedDaysAgo(jobPostedTime)
-
-    jobLocation.innerText = allJobs[i].candidate_required_location
-
-    jobsContainer.appendChild(jobContainer)
-
-    jobContainer.appendChild(jobLogo)
-
-    jobContainer.appendChild(companyAndTag)
-
-    companyAndTag.appendChild(jobCompany)
-
-    jobContainer.appendChild(jobTitle)
-
-    jobContainer.appendChild(jobPostedTimeLocation)
-
-    jobPostedTimeLocation.append(jobPosted, jobTime, jobLocation)
-
-    jobContainer.append(jobSkillsContainer)
-
-    if (postedDaysAgo(jobPostedTime) == 'Today') {
-      jobNew.innerText = 'NEW!'
-      companyAndTag.appendChild(jobNew)
+    createFilterButtons()
+  } else {
+    // use this else for filtering jobs based on
+    // filteredByTags = filterContainer.innerText.split(/\r?\n/)
+    // allJobs     //    allJobs[i].tags
+    let filterTagList = filterContainer.innerText.split(/\r?\n/)
+    filterTagList = filterTagList.map((element) => {
+      return element.toLowerCase()
+    })
+    for (let i = 0; i < allJobs.length; i++) {
+      let jobTagList = allJobs[i].tags
+      jobTagList = jobTagList.map((element) => {
+        return element.toLowerCase()
+      })
+      // if a job contains a tag from filter tags
+      let matchedTagsCount = 0
+      for (let j = 0; j < jobTagList.length; j++) {
+        let oneJobTag = jobTagList[j]
+        if (filterTagList.indexOf(oneJobTag) != -1) {
+          matchedTagsCount = matchedTagsCount + 1
+          if (matchedTagsCount == filterTagList.length) {
+            filteredJobs.push(allJobs[i])
+            break
+          }
+        } else {
+          continue
+        }
+      }
     }
+    clearJobs()
 
-    addJobSkills(jobSkillsToFilter, jobSkillsContainer)
+    for (let i = 0; i < filteredJobs.length; i++) {
+      // make job divs based on filteredJobs array
+      let jobContainer = createDiv('jobContainer')
+      let jobLogo = createDiv('jobLogo')
+      let companyAndTag = createDiv('companyAndTag')
+      let jobCompany = createDiv('jobCompany')
+      let jobNew = createDiv('jobNew')
+      let jobTitle = createDiv('jobTitle')
+      let jobPostedTimeLocation = createDiv('jobPostedTimeLocation')
+      let jobPosted = createDiv('jobPosted')
+      let jobPostedTime = filteredJobs[i].publication_date
+      let jobTime = createDiv('jobTime')
+      let jobLocation = createDiv('jobLocation')
+      let jobSkillsContainer = createDiv('jobSkills')
+      let jobType = filteredJobs[i].job_type
+      let jobTypeText = setJobTypeText(jobType)
+      let jobSkillsToFilter = filteredJobs[i].tags
+
+      jobTime.innerText = jobTypeText
+      jobCompany.innerText = filteredJobs[i].company_name
+      jobTitle.innerText = filteredJobs[i].title
+      jobPosted.innerText = postedDaysAgo(jobPostedTime)
+      jobLocation.innerText = filteredJobs[i].candidate_required_location
+      jobsContainer.appendChild(jobContainer)
+      jobContainer.appendChild(jobLogo)
+      jobContainer.appendChild(companyAndTag)
+      companyAndTag.appendChild(jobCompany)
+      jobContainer.appendChild(jobTitle)
+      jobContainer.appendChild(jobPostedTimeLocation)
+      jobPostedTimeLocation.append(jobPosted, jobTime, jobLocation)
+      jobContainer.append(jobSkillsContainer)
+
+      if (postedDaysAgo(jobPostedTime) == 'Today') {
+        jobNew.innerText = 'NEW!'
+        companyAndTag.appendChild(jobNew)
+      }
+      addJobSkills(jobSkillsToFilter, jobSkillsContainer)
+    }
+    createFilterButtons()
   }
 }
 
@@ -198,13 +261,13 @@ function createFilterButtons() {
           filterContainer.innerText = ''
           filterContainer.innerText = 'Filter jobs by clicking on job tag'
           clearFiltersContainer.removeChild(clearButton)
+          clearJobs()
+          createJobDivs(allJobs)
         })
         clearFiltersContainer.appendChild(clearButton)
+        createJobDivs(allJobs)
       } else {
         for (let i = 0; i < filteredByTags.length; i++) {
-          console.log('array length: ', filteredByTags.length)
-          console.log('array item: ', filteredByTags[i])
-          console.log('tag inner text: ', jobSkillButtons[j].innerText)
           if (filteredByTags[i] == jobSkillButtons[j].innerText) {
             duplicateTag = true
           }
@@ -218,6 +281,7 @@ function createFilterButtons() {
           filterContainer.appendChild(filterTag)
           filterTag.appendChild(filterRemoveButton)
         }
+        createJobDivs(allJobs)
       }
     })
   }
