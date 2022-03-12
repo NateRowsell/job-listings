@@ -43,7 +43,7 @@ getJobList().then((data) =>
 )
 
 async function getAllJobs(array) {
-  for (let i = 0; i < 1000; i++) {
+  for (let i = 0; i < 50; i++) {
     allJobs.push(array[i])
   }
   return allJobs
@@ -246,13 +246,24 @@ function createFilterButtons() {
       }
 
       if (filterContainer.innerText == '') {
+        let filterTagContainer = createDiv('filterTagContainer')
         let filterRemoveButton = document.createElement('button')
         filterRemoveButton.classList.add('filterRemoveButton')
+        filterRemoveButton.addEventListener('click', () => {
+          /// clear using splice here from filter tags
+          /// than redisplay jobs
+          /// than readd event listeners
+          tagIndex = filteredByTags.indexOf(jobSkillButtons[j].innerText)
+          filteredByTags.splice(tagIndex, 1)
+          filterContainer.removeChild() // figure this out
+          clearJobs()
+          createJobDivs(allJobs)
+        })
         let filterTag = document.createElement('div')
         filterTag.classList.add('filterTag')
         filterTag.innerText = jobSkillButtons[j].innerText
-        filterContainer.appendChild(filterTag)
-        filterTag.appendChild(filterRemoveButton)
+        filterTagContainer.append(filterTag, filterRemoveButton)
+        filterContainer.appendChild(filterTagContainer)
         //add clear filters button
         let clearButton = document.createElement('button')
         clearButton.setAttribute('id', 'clearFilters')
@@ -273,13 +284,24 @@ function createFilterButtons() {
           }
         }
         if (duplicateTag == false) {
+          let filterTagContainer = createDiv('filterTagContainer')
           let filterRemoveButton = document.createElement('button')
+          filterRemoveButton.addEventListener('click', () => {
+            /// clear using splice here from filter tags
+            /// than redisplay jobs
+            /// than readd event listeners
+            tagIndex = filteredByTags.indexOf(jobSkillButtons[j].innerText)
+            filteredByTags.splice(tagIndex, 1)
+            filterContainer.removeChild() /// figure this out
+            clearJobs()
+            createJobDivs(allJobs)
+          })
           filterRemoveButton.classList.add('filterRemoveButton')
           let filterTag = document.createElement('div')
           filterTag.classList.add('filterTag')
           filterTag.innerText = jobSkillButtons[j].innerText
-          filterContainer.appendChild(filterTag)
-          filterTag.appendChild(filterRemoveButton)
+          filterTagContainer.append(filterTag, filterRemoveButton)
+          filterContainer.appendChild(filterTagContainer)
         }
         createJobDivs(allJobs)
       }

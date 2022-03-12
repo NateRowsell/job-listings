@@ -283,6 +283,12 @@ header {
   font-weight: 700;
 }
 
+.jobSkill:hover {
+  cursor: pointer;
+  color: var(--lightCyanBackground);
+  background-color: var(--primary);
+}
+
 /* FILTER  */
 
 #filterContainer {
@@ -302,19 +308,47 @@ header {
   color: rgba(128, 128, 128, 0.5);
 }
 
-.filterTag {
-  background-color: var(--lightCyanFilterTablets);
-  font-size: 0.8em;
-  min-height: max-content;
-  min-width: max-content;
+#filterTagContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  min-height: fit-content;
+  min-width: fit-content;
   margin-left: 20px;
+  background-color: var(--lightCyanFilterTablets);
+  border-radius: 5px;
+}
+
+.filterTag {
+  color: var(--veryDarkCyan);
+  font-size: 0.8em;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0px 5px;
+  margin-top: 3px;
 }
 
 .filterRemoveButton {
-  background-color: var(--darkCyan);
-  height: 0.8em;
-  width: 0.8em;
+  border-radius: 0 5px 5px 0;
+  background-color: var(--primary);
+  height: 25px;
+  width: 25px;
   border: none;
+  background-image: url('./design/outline_close_white_24dp.png');
+}
+
+.filterRemoveButton:hover {
+  cursor: pointer;
+  background-color: var(--veryDarkCyan);
+  transition-duration: 0s;
+}
+
+.material-icons {
+  font-size: 15px !important;
 }
 
 #clearFiltersContainer {
