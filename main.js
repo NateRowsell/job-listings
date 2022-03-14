@@ -191,7 +191,10 @@ function createJobDivs(allJobs) {
       jobPostedTimeLocation.append(jobPosted, jobTime, jobLocation)
       jobContainer.append(jobSkillsContainer)
 
-      if (postedDaysAgo(jobPostedTime) == 'Today') {
+      if (
+        postedDaysAgo(jobPostedTime) == 'Today' ||
+        postedDaysAgo(jobPostedTime) == 'Yesterday'
+      ) {
         jobNew.innerText = 'NEW!'
         companyAndTag.appendChild(jobNew)
       }
@@ -262,7 +265,10 @@ function createJobDivs(allJobs) {
       jobPostedTimeLocation.append(jobPosted, jobTime, jobLocation)
       jobContainer.append(jobSkillsContainer)
 
-      if (postedDaysAgo(jobPostedTime) == 'Today') {
+      if (
+        postedDaysAgo(jobPostedTime) == 'Today' ||
+        postedDaysAgo(jobPostedTime) == 'Yesterday'
+      ) {
         jobNew.innerText = 'NEW!'
         companyAndTag.appendChild(jobNew)
       }

@@ -301,7 +301,7 @@ header {
   background-color: var(--primary);
 }
 
-#toTheTop {
+/* #toTheTop {
   -webkit-appearance: none;
   background-color: black;
   height: 500px;
@@ -310,7 +310,7 @@ header {
   position: sticky;
   top: 90%;
   left: 95%;
-}
+} */
 
 /* FILTER  */
 
